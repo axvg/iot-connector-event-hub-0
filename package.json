@@ -1,0 +1,24 @@
+{
+  "name": "fair-task-rabbitmq-device",
+  "version": "0.0.1",
+  "description": "This app will be used to consumme RabbitMq messages using Fair Task/Work Queues",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "stop": "node server.stop.js"
+  },
+  "author": "Francis Okechukwu",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.2.0",
+    "uuid": "^9.0.1",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

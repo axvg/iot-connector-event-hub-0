@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  # Node.js application service
+  evet_hub_service:
+    # Set the container name
+    container_name: event_hub_container
+
+    # Use the image built for your Node.js application
+    build: .
+
+    # Always restart the container
+    restart: always
+
+    # Define environment variables for the Node.js app
+    environment:
+      # rabbitmq access
+      RABBIT_MQ_USER_NAME: ${RABBIT_MQ_USER_NAME}
+      RABBIT_MQ_PASSWORD: ${RABBIT_MQ_PASSWORD}
+      RABBIT_MQ_HOST: rabbitmq
+      RABBIT_MQ_AMQP_PORT: 5672
+
+      # mongo db connection
+      DB_HOST: "mongodb://${DB_USER_NAME}:${DB_PASSWORD}@mongo"
+      DB_PORT: 27017
+      DB_NAME: ${DB_NAME}
+
+      # Websockets
+      WS_DEFAULT_URL : 'ws://all_api_service'
+      WS_URL : 'ws://ws_api_service'
+      USE_DEFAULT_PORT : ${USE_DEFAULT_PORT}
+      WS_PORT : ${WS_PORT}
+      WS_API_KEY : ${WS_API_KEY}
+
+    # Map port 3000 on the host to port 3000 on the container
+    ports:
+      - "${VIEW_ON_PORT}:3000"
+
+    networks:
+      - custom_connector_network   # use created network bridge
+
+    # depends_on:
+    #   - mongo
+    #   - rabbitmq
+
+
+# create network bridge access to resources
+networks:
+  custom_connector_network:
+    driver: bridge
+    # name: connector_network
+
+#Run using : docker compose up
